@@ -1,0 +1,10 @@
+version: '3'
+services:
+  playwright:
+    image: mcr.microsoft.com/playwright:bionic
+    environment:
+      HTTP_USER_NAME: 'guest'
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: npx playwright test --project=ui-tests
