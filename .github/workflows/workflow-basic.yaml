@@ -21,12 +21,12 @@ jobs:
         run: npx playwright test
         name: Save report
         uses: actions/upload-artifact@v3
-        with: 
-          path: html/report
-          name: Main report
-        if: failure() || success()
+              with: 
+                path: html/report
+                name: Main report
+              if: failure() || success()
       - name: Get report
         uses:  actions/download-artifact@v3
-        with:
-          name: Main report
-        if: failure() || success()
+              with:
+                name: Main report
+              if: failure() || success()
