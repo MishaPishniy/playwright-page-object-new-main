@@ -25,15 +25,10 @@ jobs:
       - name: Run tests
         run: npx playwright test
 
-      - name: Save report
+      - name: Upload Playwright report
         uses: actions/upload-artifact@v3
+        if: always()
         with:
-          path: html/report
-          name: Main report
-        if: failure() || success()
-
-      - name: Get report
-        uses: actions/download-artifact@v3
-        with:
-          name: Main report
-        if: failure() || success()
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
