@@ -11,22 +11,29 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.47.1-jammy
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Install dependencies
         run: npm ci
-      - name: Run your tests
+
+      - name: Run tests
         run: npx playwright test
-        name: Save report
+
+      - name: Save report
         uses: actions/upload-artifact@v3
-              with: 
-                path: html/report
-                name: Main report
-              if: failure() || success()
+        with:
+          path: html/report
+          name: Main report
+        if: failure() || success()
+
       - name: Get report
-        uses:  actions/download-artifact@v3
-              with:
-                name: Main report
-              if: failure() || success()
+        uses: actions/download-artifact@v3
+        with:
+          name: Main report
+        if: failure() || success()
