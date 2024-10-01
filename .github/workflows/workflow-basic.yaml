@@ -9,7 +9,7 @@ jobs:
     name: 'Playwright Tests'
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.39.0-jammy
+      image: mcr.microsoft.com/playwright:v1.47.1-jammy
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -19,4 +19,14 @@ jobs:
         run: npm ci
       - name: Run your tests
         run: npx playwright test
-        
+        name: Save report
+        uses: actions/upload-artifact@v3
+        with: 
+          path: html/report
+          name: Main report
+        if: failure() || success()
+      - name: Get report
+        uses:  actions/download-artifact@v3
+        with:
+          name: Main report
+        if: failure() || success()
