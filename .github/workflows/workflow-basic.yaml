@@ -22,8 +22,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npx playwright test
+      - name: Run Playwright tests and save report
+        run: npx playwright test --reporter=html --output=playwright-report
+
+      - name: Ensure Playwright report exists
+        run: mkdir -p playwright-report
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v3
